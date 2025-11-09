@@ -1,0 +1,13 @@
+/* ======= Global Styles ======= */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body,
+html {
+	font-family: 'Roboto', sans-serif;
+	height: 100%;
+	background-color: #fff;
+}

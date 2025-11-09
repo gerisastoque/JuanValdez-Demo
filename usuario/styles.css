@@ -1,0 +1,618 @@
+/* ==== Global (mobile) ==== */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+html,
+body {
+	height: 100%;
+}
+
+/* >>> VARIABLES NECESARIAS <<< */
+:root {
+	--brandbar-h: 80px; /* alto barra roja */
+	--nav-h: 88px; /* alto footer de navegación del form */
+}
+
+body {
+	margin: 0;
+	font-family: 'Roboto', system-ui, -apple-system, Segoe UI, Arial, 'Noto Sans', 'Helvetica Neue', sans-serif;
+	color: #514127; /* Negro café texto */
+	background: #fbfbfb; /* Fondo */
+	line-height: 1.3;
+	-webkit-tap-highlight-color: transparent;
+}
+img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+a,
+button,
+input,
+textarea {
+	font: inherit;
+	color: inherit;
+}
+a {
+	text-decoration: none;
+}
+:focus-visible {
+	outline: 2px solid #e61d31;
+	outline-offset: 2px;
+	border-radius: 6px;
+}
+
+.screen {
+	min-height: 100dvh;
+}
+
+/* Contenedor “app” estrecho, estilo tarjeta blanca como el mock */
+.container {
+	width: 100%;
+	max-width: 380px; /* más cercano al mock */
+	margin-inline: auto;
+	background: #fbfbfb;
+	border-radius: 12px;
+	padding-inline: clamp(12px, 4vw, 20px);
+}
+
+/* ==== Botón ==== */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 18px 16px;
+	border: 1px solid transparent;
+	border-radius: 12px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: background 0.2s ease, transform 0.1s ease;
+}
+.btn:active {
+	transform: translateY(1px);
+}
+.btn-primary {
+	background: #e61d31;
+	color: #ffffff;
+}
+.btn-primary:hover {
+	background: #c81727;
+}
+
+/* ==== HOME ==== */
+.brand-bar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #e61d31;
+	height: var(--brandbar-h);
+	padding: 0 12px;
+}
+.brand-bar__logo {
+	height: 28px;
+}
+
+/* Layout de la pantalla home */
+.home-hero {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-height: calc(100dvh - var(--brandbar-h));
+	row-gap: clamp(18px, 2.2vh, 26px);
+	text-align: center;
+}
+
+/* Heading como imagen PNG centrada */
+.home-heading {
+	width: 100%;
+	max-width: 320px;
+	margin-inline: auto;
+	margin-top: clamp(80px, 2vh, 60px);
+}
+
+/* Copy */
+.home-copy {
+	max-width: 320px;
+	margin: 0 auto;
+	font-size: 17px;
+	color: #5a2d0c;
+}
+.home-copy strong {
+	color: #000;
+	font-weight: 700;
+}
+
+/* CTA */
+.btn-cta {
+	width: 100%;
+	max-width: 320px;
+	height: 66px;
+	border-radius: 12px;
+	margin-top: 4px;
+}
+
+/* Spacer flexible */
+.home-spacer {
+	flex: 1 1 auto;
+}
+
+/* Imagen de la taza */
+.home-cup {
+	width: 100%;
+	max-width: 340px;
+	margin-inline: auto;
+	margin-top: clamp(12px, 3vh, 24px);
+}
+
+/* Responsivo suave */
+@media (max-width: 768px) {
+	.container {
+		max-width: 100%;
+	}
+	.home-heading,
+	.btn-cta,
+	.home-cup,
+	.home-copy {
+		max-width: 92%;
+	}
+}
+
+/* ================================
+   FORM (grid con footer fijo abajo)
+   ================================ */
+.form-panel {
+	display: grid;
+	grid-template-rows: 1fr auto;
+	min-height: calc(100dvh - var(--brandbar-h));
+	overflow: hidden;
+	padding-top: clamp(56px, 14vh, 120px);
+	padding-bottom: 0;
+}
+.form-layout {
+	display: contents;
+}
+.form-content {
+	overflow: auto;
+	padding-bottom: 12px;
+}
+.form-progress {
+	color: #a27e6a;
+	font-size: 14px;
+	margin-bottom: 8px;
+}
+.form-title {
+	margin: 0 0 12px;
+	font-size: clamp(28px, 3.6vh, 34px);
+	line-height: 1.2;
+	color: #3d280a;
+	font-weight: 700;
+}
+.options-list {
+	display: grid;
+	gap: 12px;
+	margin-top: 8px;
+}
+.option {
+	display: grid;
+	grid-template-columns: 25px 1fr;
+	align-items: center;
+	gap: 10px;
+	background: #fff;
+	border: 1px solid #f0dede;
+	border-radius: 12px;
+	padding: 20px 12px;
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+	transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.option:hover {
+	border-color: #f3c8cf;
+}
+.option.is-selected {
+	border-color: #f3c8cf;
+	box-shadow: 0 0 0 3px rgba(249, 229, 231, 0.8) inset;
+	background: #fff;
+}
+.option__input {
+	position: absolute;
+	opacity: 0;
+	pointer-events: none;
+}
+.option__icon {
+	width: 22px;
+	height: 22px;
+	border-radius: 999px;
+	background: #f9e5e7;
+	position: relative;
+}
+.option.is-selected .option__icon::after {
+	content: '';
+	position: absolute;
+	inset: 5px;
+	border-right: 2px solid #e61d31;
+	border-bottom: 2px solid #e61d31;
+	transform: rotate(45deg);
+}
+.option__label {
+	font-size: 18px;
+	color: #514127;
+}
+
+/* Footer fijo dentro de la tarjeta */
+.navigation-bar {
+	position: relative;
+	padding: 12px 0 16px;
+	background: #fff;
+	box-shadow: 0 -8px 12px rgba(0, 0, 0, 0.03);
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+	min-height: var(--nav-h);
+}
+.nav-right {
+	position: relative;
+	min-height: 56px;
+}
+.nav-right .btn {
+	position: absolute;
+	inset: 0;
+}
+.is-hidden {
+	visibility: hidden;
+	pointer-events: none;
+}
+.btn-ghost {
+	background: #fdecef;
+	color: #e61d31;
+}
+.btn-ghost:hover {
+	background: #f9d6db;
+}
+/* Animación entre preguntas */
+.fadein {
+	animation: fadin 0.22s ease;
+}
+@keyframes fadin {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+/* ================================
+   RECOMMENDATION (final según mock)
+   ================================ */
+
+/* Contenedor principal */
+.recommendation-screen .rec-panel {
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	min-height: calc(100dvh - var(--brandbar-h)); /* ocupa toda la vista menos la barra roja superior */
+}
+
+/* Card roja que llena el resto de la pantalla */
+.recommendation-screen .rec-card,
+.recommendation .rec-card {
+	background: #e61d31;
+	color: #ffffff;
+	border-radius: 23px 20px 0 0; /* redondeo superior, base al ras */
+	padding: 25px 18px 28px;
+	margin-top: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+/* Imagen más grande y centrada verticalmente */
+.recommendation-screen .rec-image-wrapper,
+.recommendation .rec-image-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+	min-height: 260px;
+	margin-top: 10px;
+	margin-bottom: 14px;
+}
+
+.recommendation-screen .rec-image,
+.recommendation .rec-image {
+	width: 100%;
+	max-width: 320px;
+	max-height: 340px;
+	object-fit: contain;
+	filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.18));
+}
+
+/* Textos más abajo, con jerarquía visual */
+.recommendation-screen .rec-texts,
+.recommendation .rec-texts {
+	text-align: center;
+	padding-inline: 8px;
+	margin-top: 12px;
+}
+
+.recommendation-screen .rec-title,
+.recommendation .rec-title {
+	margin: 10px 0 12px;
+	font-size: 26px; /* +4px más grande que antes */
+	line-height: 1.3;
+	font-weight: 400;
+}
+
+.recommendation-screen .rec-title strong,
+.recommendation .rec-title strong {
+	font-weight: 700;
+}
+
+.recommendation-screen .rec-desc,
+.recommendation .rec-desc {
+	margin: 0 auto 10px;
+	max-width: 340px;
+	font-size: 15px;
+	line-height: 1.4;
+	opacity: 0.95;
+}
+
+.recommendation-screen .rec-size,
+.recommendation .rec-size {
+	margin: 6px 0 22px;
+	font-size: 15px;
+}
+.recommendation-screen .rec-size strong,
+.recommendation .rec-size strong {
+	color: #ffffff;
+	font-weight: 700;
+}
+
+/* Acciones pegadas al fondo */
+.recommendation-screen .rec-actions,
+.recommendation .rec-actions {
+	width: 100%;
+	display: grid;
+	gap: 14px;
+	margin-top: auto; /* empuja los botones al fondo */
+}
+
+/* Botones */
+.recommendation-screen .btn-light,
+.recommendation .btn-light {
+	background: #ffffff;
+	color: #e61d31;
+	border-radius: 12px;
+	border: 1px solid transparent;
+	padding: 20px;
+	font-weight: 700;
+	font-size: 16px;
+}
+.recommendation-screen .btn-light:disabled,
+.recommendation .btn-light:disabled {
+	opacity: 0.7;
+}
+
+.recommendation-screen .btn-ghost-rose,
+.recommendation .btn-ghost-rose {
+	background: #f9e5e7;
+	color: #a23a44;
+	border-radius: 12px;
+	border: 1px solid transparent;
+	padding: 20px;
+	font-weight: 700;
+	font-size: 16px;
+}
+
+/* Ajuste mobile */
+@media (max-width: 768px) {
+	.recommendation-screen .rec-image,
+	.recommendation .rec-image {
+		max-width: 340px;
+		max-height: 360px;
+	}
+	.recommendation-screen .rec-title,
+	.recommendation .rec-title {
+		font-size: 24px;
+	}
+}
+
+/* ================================
+   BILLING (pantalla de facturación)
+   ================================ */
+
+.billing-screen .bill-panel {
+	padding: clamp(18px, 3.5vw, 22px);
+	display: flex;
+	flex-direction: column;
+	min-height: calc(100dvh - var(--brandbar-h));
+}
+
+/* Título y subtítulo (según referencia) */
+.billing-screen .bill-title {
+	margin: clamp(130px, 2vh, 100px) 0 6px;
+	font-size: clamp(38px, 4.6vw, 32px);
+	line-height: 0.97;
+	color: #3d280a; /* café oscuro título */
+	font-weight: 800; /* fuerte como el mock */
+}
+
+.billing-screen .bill-subtitle {
+	margin: 10px 0 30px;
+	color: #8f7767; /* gris-café suave */
+	font-size: 18px;
+}
+
+/* Formulario */
+.billing-screen .bill-form {
+	display: grid;
+	gap: 10px;
+}
+
+/* Campo base */
+.billing-screen .field {
+	display: grid;
+	gap: 6px;
+}
+
+.billing-screen .input {
+	width: 100%;
+	padding: 20px 14px;
+	border-radius: 12px;
+	border: 1px solid #e7d8d1;
+	background: #ffffff;
+	color: #3d280a;
+	font-size: 16px;
+	outline: none;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.billing-screen .input::placeholder {
+	color: #b9a9a1;
+}
+
+.billing-screen .input:focus {
+	border-color: #f3c8cf;
+	box-shadow: 0 0 0 3px rgba(249, 229, 231, 0.75);
+}
+
+.billing-screen .input.is-invalid {
+	border-color: #e61d31;
+	box-shadow: 0 0 0 2px rgba(230, 29, 49, 0.2);
+}
+
+.billing-screen .error-msg {
+	min-height: 16px;
+	font-size: 12px;
+	color: #e61d31;
+}
+
+/* Acciones (botones) */
+.billing-screen .bill-actions {
+	margin-top: 14px;
+	display: grid;
+	gap: 14px;
+}
+
+.btn-wide {
+	width: 100%;
+	height: 65px;
+	border-radius: 12px;
+	font-weight: 700;
+	font-size: 16px;
+}
+
+/* Reutiliza .btn-primary y .btn-ghost-rose ya definidos en tu tema */
+/* Si quieres más contraste en mobile grande: */
+@media (min-width: 768px) {
+	.billing-screen .bill-title {
+		max-width: 20ch;
+	}
+	.billing-screen .bill-subtitle {
+		max-width: 36ch;
+	}
+}
+
+/* ================================
+   WAITING (estado del pedido)
+   ================================ */
+
+.waiting-screen .wait-panel {
+	padding: clamp(20px, 3.5vw, 22px);
+	min-height: calc(100dvh - var(--brandbar-h));
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.waiting-screen .wait-title {
+	margin: clamp(60px, 2vh, 16px) 0 6px;
+	font-size: clamp(38px, 5.2vw, 32px);
+	line-height: 1.1;
+	color: #3d280a; /* café oscuro */
+	font-weight: 800;
+	text-align: center;
+}
+
+.waiting-screen .wait-subtitle {
+	margin: 0 0 6px;
+	color: #8f7767;
+	font-size: 18px;
+	text-align: center;
+}
+.waiting-screen #orderNumber {
+	color: #3d280a;
+}
+
+/* Imagen del producto */
+.waiting-screen .wait-image-wrapper {
+	margin: 12px 0 18px;
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+	min-height: 260px;
+}
+.waiting-screen .wait-image {
+	width: 100%;
+	max-width: 320px;
+	max-height: 360px;
+	object-fit: contain;
+}
+
+/* Estado */
+.waiting-screen .wait-status {
+	margin-top: auto; /* empuja hacia el fondo si hay espacio */
+	display: grid;
+	justify-items: center;
+	gap: 10px;
+}
+
+.waiting-screen .wait-status-label {
+	color: #6d5a4d;
+	font-size: 14px;
+}
+
+/* Píldora de estado */
+.status-pill {
+	border: none;
+	padding: 14px 22px;
+	border-radius: 999px;
+	font-weight: 800;
+	font-size: 16px;
+	line-height: 1;
+	cursor: default;
+	width: fit-content;
+}
+
+/* Variantes según estado */
+.status-pill.is-received {
+	/* Orden recibida */
+	background: #8fd021; /* verde vivo */
+	color: #2e2a0a;
+}
+
+.status-pill.is-processing {
+	/* En proceso */
+	background: #7a541b; /* marrón */
+	color: #2e2a0a;
+}
+
+.status-pill.is-ready {
+	/* Listo */
+	background: #e61d31; /* rojo marca */
+	color: #ffffff;
+}
+
+@media (max-width: 768px) {
+	.waiting-screen .wait-image {
+		max-width: 340px;
+		max-height: 380px;
+	}
+	.status-pill {
+		font-size: 16px;
+		padding: 16px 24px;
+	}
+}
