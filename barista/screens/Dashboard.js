@@ -3,14 +3,28 @@ import socket from '../socket.js';
 export default function renderDashboard() {
 	const app = document.getElementById('app');
 	app.innerHTML = `
-    <h1>Pedidos en Cola</h1>
+	<!-- Barra roja con logo -->
+	<section>
+      <header class="brand-bar">
+        <img
+          class="brand-bar__logo"
+          src="../Assets/logo-menu.png"
+          alt="Juan Valdez Café"
+        />
+      </header>
+	  <section/>
+	   <img
+          class="welcome-image"
+          src="../Assets/image-barista.png"
+          alt="Juan Valdez Café"
+        />
     <table id="ordersTable" class="table">
       <thead>
         <tr>
           <th># Pedido</th>
           <th>Producto</th>
           <th>Tamaño</th>
-          <th>Detalles</th>
+          <th>Nombre cliente</th>
           <th>Estado</th>
           <th>Acciones</th>
         </tr>

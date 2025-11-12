@@ -11,3 +11,37 @@ html {
 	height: 100%;
 	background-color: #fff;
 }
+.brand-bar {
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	background: #e61d31;
+	height: var(--brandbar-h);
+	padding: 0 12px;
+	height: 70px;
+}
+.brand-bar__logo {
+	height: 28px;
+	margin-left: 80px;
+}
+.welcome-image{
+	display: block;
+	margin: 20px auto;
+	width: 1250px;
+	height: auto;
+}
+.table{
+	width: 80%;
+	margin: 20px auto;
+	border-collapse: collapse;
+}
+.table th, .table td{
+	border-bottom: 1px solid #e61d31;
+	padding: 8px;
+	width: 100px;
+	text-align: center;
+}
+.table th{
+	color: #514127;
+	font-size: 20px;
+}
