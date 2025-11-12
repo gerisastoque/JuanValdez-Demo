@@ -1,5 +1,4 @@
 import renderDashboard from "./screens/Dashboard.js";
-import renderOrderDetails from "./screens/OrderDetails.js";
 import socket from "./socket.js";
 
 const router = new Router({
