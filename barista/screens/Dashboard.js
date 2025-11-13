@@ -18,6 +18,7 @@ export default function renderDashboard() {
           src="../Assets/image-barista.png"
           alt="Juan Valdez Café"
         />
+		<section class="orders-section">
     <table id="ordersTable" class="table">
       <thead>
         <tr>
@@ -31,9 +32,26 @@ export default function renderDashboard() {
       </thead>
       <tbody></tbody>
     </table>
+	<section/>
   `;
 
 	const ordersTableBody = document.querySelector('#ordersTable tbody');
+
+	// ⭐ NUEVO: función para aplicar color según valor
+	function actualizarColorSelect(select) {
+		select.classList.remove('estado-recibida', 'estado-preparacion', 'estado-listo');
+		switch (select.value) {
+			case '1':
+				select.classList.add('estado-recibida');
+				break;
+			case '2':
+				select.classList.add('estado-preparacion');
+				break;
+			case '3':
+				select.classList.add('estado-listo');
+				break;
+		}
+	}
 
 	function addOrderToTable(order) {
 		const row = document.createElement('tr');
@@ -55,6 +73,11 @@ export default function renderDashboard() {
       </td>
     `;
 		ordersTableBody.appendChild(row);
+
+		// ⭐ NUEVO: aplicar color inicial y escuchar cambios
+		const select = row.querySelector('.estado-select');
+		actualizarColorSelect(select);
+		select.addEventListener('change', () => actualizarColorSelect(select));
 	}
 
 	function cargarPedidos(pedidos) {
@@ -71,7 +94,6 @@ export default function renderDashboard() {
 			const row = e.target.closest('tr');
 			const id = row.dataset.id;
 			const nuevoEstado = row.querySelector('.estado-select').value;
-
 			socket.emit('actualizarEstadoPedido', { id, nuevoEstado });
 		}
 	});
@@ -81,6 +103,7 @@ export default function renderDashboard() {
 		if (row) {
 			const select = row.querySelector('.estado-select');
 			select.value = updatedOrder.estado_id;
+			actualizarColorSelect(select); // ⭐ NUEVO: actualizar color también aquí
 		}
 	});
 }

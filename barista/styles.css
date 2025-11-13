@@ -40,8 +40,61 @@ html {
 	padding: 8px;
 	width: 100px;
 	text-align: center;
+	color: #514127;
 }
 .table th{
-	color: #514127;
+	
 	font-size: 20px;
+}
+.orders-section{
+	margin-top: 20px;
+	padding-bottom: 10px;
+}
+.actualizar-estado-btn{
+	background-color: transparent;
+	color: #514127;
+	border: none;
+	border-bottom: #514127 2px solid;
+	padding: 5px;
+	cursor: pointer;
+}
+
+.estado-select {
+  border: none;
+  border-radius: 100px;
+  height:40px ;
+  padding: 4px 16px;
+  color: #fff;
+  font-weight: bolder;
+  text-align: center;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: none;
+}
+
+.estado-recibida {
+  background-color: #92C92A; 
+  color:#3D280A ;
+}
+
+
+.estado-preparacion {
+  background-color: #7E601A; 
+  color:#3D280A ;
+}
+
+
+.estado-listo {
+  background-color: #E61D31;
+  color:#fff ;
+}
+
+
+.estado-select option {
+  background-color: #fff;
+  color: #000;
+  display: flex;
+  border: none;
 }
